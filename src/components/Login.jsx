@@ -28,7 +28,7 @@ function Login() {
   }
 
   return (
-    <div>
+    <div className="">
       
     </div>
   )
