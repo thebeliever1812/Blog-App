@@ -6,5 +6,6 @@ import LogoutBtn from '../components/Header/LogoutBtn'
 import Button from './Button'
 import Input from './Input'
 import PostCard from './PostCard'
+import SignUp from './SignUp'
 
-export { Header, Footer, Container, Logo, LogoutBtn, Button, Input, PostCard }
+export { Header, Footer, Container, Logo, LogoutBtn, Button, Input, PostCard, SignUp }

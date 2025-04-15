@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { useForm } from "react-hook-form";
-import { login as authLogin } from "../features/auth/authSlice";
 import authService from "../appwrite/auth";
-import { Input, Logo, Button } from "./index";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login as authLogin } from "../features/auth/authSlice";
+import { Button, Input } from "./index";
 
-function Login() {
+function SignUp() {
+	const [error, setError] = useState("");
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const {
@@ -14,14 +14,13 @@ function Login() {
 		formState: { errors },
 		handleSubmit,
 	} = useForm();
-	const [error, setError] = useState("");
 
-	async function login(data) {
+	async function accountCreation(data) {
+		setError("");
 		try {
-			setError("");
-			const session = await authService.login(data);
+			const session = await authService.createAccount(data);
 			if (session) {
-				const userData = await authService.getCurrentUser();
+				const userData = authService.getCurrentUser();
 				if (userData) {
 					dispatch(authLogin(userData));
 					navigate("/");
@@ -33,7 +32,7 @@ function Login() {
 	}
 
 	return (
-		<div className="flex items-center justify-center w-full">
+		<div className="flex items-center justify-center">
 			<div
 				className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
 			>
@@ -43,21 +42,39 @@ function Login() {
 					</span>
 				</div>
 				<h2 className="text-center text-2xl font-bold leading-tight">
-					Sign in to your account
+					Sign up to create account
 				</h2>
 				<p className="mt-2 text-center text-base text-black/60">
-					Don&apos;t have any account?&nbsp;
+					Already have an account?&nbsp;
 					<Link
-						to="/signup"
+						to="/login"
 						className="font-medium text-primary transition-all duration-200 hover:underline"
 					>
-						Sign Up
+						Sign In
 					</Link>
 				</p>
 				{error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-				<form onSubmit={handleSubmit(login)} className="mt-8">
+				<form onSubmit={handleSubmit(accountCreation)}>
 					<div className="space-y-5">
+						{/* Input Field for Name */}
+						<Input
+							label="Full Name:"
+							type="password"
+							placeholder="Enter Full Name"
+							{...register("name", {
+								required: true,
+								maxLength: 20,
+								pattern: {
+									value: /^[a-zA-Z]+(?: [a-zA-Z]+)*$/,
+									message: "Enter a valid full name",
+								},
+							})}
+							aria-invalid={errors.name ? "true" : "false"}
+						/>
+						{errors.name && <p role="alert">{errors.name.message}</p>}
+
+						{/* Input Field for Email */}
 						<Input
 							label="E-mail: "
 							type="email"
@@ -75,6 +92,7 @@ function Login() {
 							<p role="alert">Email address is required</p>
 						)}
 
+						{/* Input Field for Password */}
 						<Input
 							label="Password"
 							type="password"
@@ -84,7 +102,7 @@ function Login() {
 						/>
 						{errors.password && <p role="alert">Password is incorrect</p>}
 
-						<Button type="submit" className="w-full">Sign In</Button>
+                        <Button type="submit" className="w-full">Sign Up</Button>
 					</div>
 				</form>
 			</div>
@@ -92,4 +110,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default SignUp;
