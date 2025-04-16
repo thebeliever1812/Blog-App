@@ -7,5 +7,6 @@ import Button from './Button'
 import Input from './Input'
 import PostCard from './PostCard'
 import SignUp from './SignUp'
+import RTE from "./RTE"
 
-export { Header, Footer, Container, Logo, LogoutBtn, Button, Input, PostCard, SignUp }
+export { Header, Footer, Container, Logo, LogoutBtn, Button, Input, PostCard, SignUp, RTE }
