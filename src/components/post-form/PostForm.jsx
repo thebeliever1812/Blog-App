@@ -22,7 +22,9 @@ function PostForm({ post }) {
 
 	async function submit(data) {
 		if (post) {
-			const file = data.image[0] ? fileService.fileUpload(data.image[0]) : null;
+			const file = data.image[0]
+				? await fileService.fileUpload(data.image[0])
+				: null;
 
 			if (file) {
 				fileService.fileDelete(post.featuredImage);
@@ -37,12 +39,14 @@ function PostForm({ post }) {
 				navigate(`/post/${dbPost.$id}`);
 			}
 		} else {
-			// Todo : check
-			const file = await fileService.fileUpload(data.image[0]);
+			let file = null;
+
+			if (data.image && data.image[0]) {
+				file = await fileService.fileUpload(data.image[0]);
+			}
 
 			if (file) {
-				const fileId = file.$id;
-				data.featuredImage = fileId;
+				data.featuredImage = file.$id;
 				const dbPost = await appwriteService.createPost({
 					...data,
 					userId: userData.$id,
@@ -50,6 +54,8 @@ function PostForm({ post }) {
 				if (dbPost) {
 					navigate(`/post/${dbPost.$id}`);
 				}
+			} else {
+				alert("Please upload an image!");
 			}
 		}
 	}
@@ -116,7 +122,7 @@ function PostForm({ post }) {
 				{post && (
 					<div className="w-full mb-4">
 						<img
-							src={appwriteService.getFilePreview(post.featuredImage)}
+							src={fileService.getFilePreview(post.featuredImage)}
 							alt={post.title}
 							className="rounded-lg"
 						/>

@@ -4,6 +4,7 @@ import { login, logout } from './features/auth/authSlice'
 import { useEffect, useState } from 'react'
 import authService from './appwrite/auth.js'
 import { Header, Footer } from './components/index.js'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -28,7 +29,7 @@ function App() {
     <div className='h-screen w-full bg-[#1f1d1d] text-center'>
       <Header />
       <main>
-        {/* <Outlet /> */}
+        <Outlet />
       </main>
       <Footer />
     </div>

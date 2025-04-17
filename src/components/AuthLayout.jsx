@@ -20,6 +20,6 @@ export default function Protected({ children, authentication = true }) {
 			<span className="absolute loader top-5"></span>
 		</div>
 	) : (
-		{ children }
+		<>{children}</>
 	);
 }

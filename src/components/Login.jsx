@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { login as authLogin } from "../features/auth/authSlice";
 import authService from "../appwrite/auth";
 import { Input, Logo, Button } from "./index";
+import { Link } from "react-router";
 
 function Login() {
 	const dispatch = useDispatch();
@@ -71,7 +72,7 @@ function Login() {
 							})}
 							aria-invalid={errors.email ? "true" : "false"}
 						/>
-						{errors.email?.type === required && (
+						{errors.email?.type === "required" && (
 							<p role="alert">Email address is required</p>
 						)}
 

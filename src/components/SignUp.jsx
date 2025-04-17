@@ -3,7 +3,9 @@ import authService from "../appwrite/auth";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login as authLogin } from "../features/auth/authSlice";
-import { Button, Input } from "./index";
+import { Button, Input, Logo } from "./index";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 function SignUp() {
 	const [error, setError] = useState("");
@@ -60,7 +62,7 @@ function SignUp() {
 						{/* Input Field for Name */}
 						<Input
 							label="Full Name:"
-							type="password"
+							type="text"
 							placeholder="Enter Full Name"
 							{...register("name", {
 								required: true,
@@ -88,7 +90,7 @@ function SignUp() {
 							})}
 							aria-invalid={errors.email ? "true" : "false"}
 						/>
-						{errors.email?.type === required && (
+						{errors.email?.type === "required" && (
 							<p role="alert">Email address is required</p>
 						)}
 
