@@ -8,5 +8,7 @@ import Input from './Input'
 import PostCard from './PostCard'
 import SignUp from './SignUp'
 import RTE from "./RTE"
+import Login from './Login'
+import PostForm from './post-form/PostForm'
 
-export { Header, Footer, Container, Logo, LogoutBtn, Button, Input, PostCard, SignUp, RTE }
+export { Header, Footer, Container, Logo, LogoutBtn, Button, Input, PostCard, SignUp, RTE, Login, PostForm }
